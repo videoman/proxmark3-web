@@ -1,0 +1,14 @@
+[Unit]
+Description=ProxMark3-web Service
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi/proxmark3-web/
+#Type=simple
+Environment=FLASK_CONFIG=production
+Environment=FLASK_APP=/home/pi/proxmark3-web/proxmark3-web.py
+ExecStart=/usr/local/bin/flask run
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

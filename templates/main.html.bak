@@ -1,0 +1,70 @@
+<!doctype html>
+<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+<title>Hello from Flask</title>
+<div class="container" >
+
+<body>
+{% with messages = get_flashed_messages() %}
+<div class="pagination">
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+ {% endif %}
+</div>
+{% endwith %}
+
+<div class="row">
+   <div class="col-lg">
+Facility Code: {{ facility_code }} 
+   </div>
+   <div class="col-lg">
+Card Number: {{ card_number }}
+   </div>
+   <div class="col-lg">
+Raw HID Formated Card: {{ raw_cardnumber }} 
+  </div>
+</div>
+
+<div class="row">
+   <div class="col-md">
+	   <p><a href="/read/hid" class="btn btn-primary btn-lg" role="button">Read a HID Card</button></a> </p>
+   </div>
+<div class="row">
+	<p>
+  <div class="col-md">
+   <form class="form-inline" action="/write/{{raw_cardnumber if raw_cardnumber else '2006540A73'}}" method="get">
+     <div class="form-group">
+       <label class="sr-only" for="exampleInputAmount">Card to clone</label>
+       <div class="input-group">
+	       <p><div class="input-group-addon">Write ID to Card</div>
+         <input type="text" class="form-control" id="weigand_hex" value={{raw_cardnumber if raw_cardnumber else '2006540A73'}} placeholder={{raw_cardnumber if raw_cardnumber else '2006540A73'}}>
+       </div>
+     </div>
+     <button type="submit" class="btn btn-primary">Write it! (Clone)</button>
+   </form></p>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-lg">
+	<p><a href="/" type="submit" class="btn btn-primary btn-lg" formaction="/">Reset</button></a>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-lg">
+	<p><a href="/wipe_card" type="submit" class="btn btn-danger btn-lg" formaction="/wipe_card">Wipe Card</button></a>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-lg">
+	   <p><a href="/provision_card" type="button" class="btn btn-warning btn-lg">Provision Card with XFR ID</a>
+   </div>
+</div>
+
+</div>
+<!-- I am a code comment. I have a Key for you. 2005FFFFFF. --!>
