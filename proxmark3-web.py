@@ -90,7 +90,7 @@ if(True):
                 #return 'Hello, World!\n<br>Raw Card Number:' + raw_cardnumber + '<br> Card ID:' + card_number + ' FC:' + facility_code
                 card = get_card_data(cardnumber.stdout.decode('ASCII'))
                 print(card)
-                current_time = str(datetime.now()
+                current_time = str(datetime.now())
                 print(current_time + ' _Card Used_ ' + card, file=open(logfile, "a"))
                 return render_template('main.html', 
                         card_number=card['card_number'], 
