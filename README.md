@@ -1,13 +1,25 @@
 # proxmark3-web
 Python Flask Web Interface for proxmark3 RDV4 hardware.
 
+
 # Installation Instructions
 These instructions assume you have Raspbian on your Pi already setup, and ready to go. [Raspbian Install] (https://www.raspberrypi.org/documentation/installation/installing-images/)
 Once you have the card writen, you should enable SSH, per the instructons on [here] (https://linuxize.com/post/how-to-enable-ssh-on-raspberry-pi/)
 
-SSH into your pi, and follow along.
+SSH into your pi, and follow along with this...
 
-## Install
+## Quick Install
+
+```shell
+sudo apt -y install git
+
+git clone https://github.com/videoman/proxmark3-web.git
+
+cd proxmark3-web
+./install-all.sh
+```
+
+## Manual Install
 ### Proxymark3-rdv4 client
 Download and install the proxmark3 client from the [RFID Research Group](https://github.com/RfidResearchGroup/proxmark3)
 
