@@ -91,7 +91,7 @@ if(True):
                 card = get_card_data(cardnumber.stdout.decode('ASCII'))
                 print(card)
                 current_time = datetime.now().isoformat(timespec='seconds')
-                print(current_time + ' _Card Used_ ' + card, file=open(logfile, "a"))
+                print(str(current_time) + ' _Card Used_ ' + card, file=open(logfile, "a"))
                 return render_template('main.html', 
                         card_number=card['card_number'], 
                         oem=card['oem'], 
@@ -111,8 +111,8 @@ if(True):
             if('HID Prox TAG ID:' in cardnumber.stdout.decode('ASCII')):
                 card = get_card_data(cardnumber.stdout.decode('ASCII'))
                 print(card)
-                current_time=str(datetime.now().isoformat(timespec='seconds'))
-                print(current_time + ' _Card Used_ ' + card, file=open(logfile, "a"))
+                current_time=datetime.now().isoformat(timespec='seconds'))
+                print(str(current_time) + ' _Card Used_ ' + card, file=open(logfile, "a"))
                 card_read=1
                 #return 'Hello, World!\n<br>Raw Card Number:' + raw_cardnumber + '<br> Card ID:' + card_number + ' FC:' + facility_code
                 return render_template('main.html', 
