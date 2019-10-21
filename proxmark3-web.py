@@ -9,7 +9,7 @@ from flask import Flask, flash, redirect, render_template, \
 
 from datetime import datetime
 
-debug=1
+debug=0
 proxmark3_rdv4_dir='/home/pi/proxmark3'
 proxmark3_rdv4_client=proxmark3_rdv4_dir + '/client/proxmark3'
 logfile = "/home/pi/card-reads.log"
@@ -21,7 +21,7 @@ def get_card_data(data):
     for line in data.split("\n"):
         if("TAG ID:" in line):
             print(str(line.strip()))
-            line.split()
+            if debug: line.split()
             cardsplit = line.split()
             card_data = {}
             card_data['raw_cardnumber'] = str(cardsplit[5])
@@ -57,11 +57,11 @@ if(True):
     app = Flask(__name__, instance_relative_config=True)
 
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='abc123',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
+#    app = Flask(__name__, instance_relative_config=True)
+#    app.config.from_mapping(
+#        SECRET_KEY='abc123',
+#        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+#    )
 
 #    if test_config is None:
 #        # load the instance config, if it exists, when not testing
