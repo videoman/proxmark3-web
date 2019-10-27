@@ -10,9 +10,10 @@ from flask import Flask, flash, redirect, render_template, \
 from datetime import datetime
 
 debug=0
-proxmark3_rdv4_dir='/home/pi/proxmark3'
+
+proxmark3_rdv4_dir='../proxmark3'
 proxmark3_rdv4_client=proxmark3_rdv4_dir + '/client/proxmark3'
-logfile = "/home/pi/card-reads.log"
+logfile = "../card-reads.log"
 # Setup a dictionary for the serial port types
 serial_port_list = { '/dev/tty.usbmodemiceman1', '/dev/ttyACM0' }
 
@@ -58,10 +59,10 @@ if(True):
 
     # create and configure the app
 #    app = Flask(__name__, instance_relative_config=True)
-#    app.config.from_mapping(
-#        SECRET_KEY='abc123',
+    app.config.from_mapping(
+        SECRET_KEY='djjslekrjgi348gj38fd225u8g',
 #        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-#    )
+    )
 
 #    if test_config is None:
 #        # load the instance config, if it exists, when not testing
