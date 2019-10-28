@@ -35,6 +35,10 @@
 			 <input type="hidden" name="raw_cardnumber" value={{ row['card_raw'] }} />
 			 <button type="submit" class="btn btn-primary">Clone</button>
 		 </form>
+		 <form action="/hid/sim" method="get">
+			 <input type="hidden" name="raw_cardnumber" value={{ row['card_raw'] }} />
+			 <button type="submit" class="btn btn-success">Simulate</button>
+		 </form>
 	 </div>
 	 <div class="col">
 		 {{ row['card_facility_code'] }}

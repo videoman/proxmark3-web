@@ -156,10 +156,24 @@ if(True):
                 flash('ERROR: Could not read a card... please try again....')
                 return redirect(url_for('index'))
 
+    @app.route('/hid/sim')
+    def sim_hid_card():
+        raw_cardnumber = request.args.get('raw_cardnumber')
+        if debug:
+            print('Got card raw: ' + str(raw_cardnumber))
+
+        #Send hid simulate tag to proxmark3
+        write_hid = subprocess.run([proxmark3_rdv4_client, serial_port, '-c', 'lf hid sim ' + raw_cardnumber ], capture_output=True)
+        if('ERROR: serial port' in write_hid.stdout.decode('ASCII')):
+            flash('Serial port error')
+            return render_template('card_list')
+
+
     @app.route('/write')
     def write_hid():
         raw_cardnumber = request.args.get('raw_cardnumber')
-        print('Got card raw: ' + str(raw_cardnumber))
+        if debug:
+            print('Got card raw: ' + str(raw_cardnumber))
 
         write_hid = subprocess.run([proxmark3_rdv4_client, serial_port, '-c', 'lf t55xx wipe ; lf hid clone ' + raw_cardnumber + ' ; lf hid read' ], capture_output=True)
         if('ERROR: serial port' in write_hid.stdout.decode('ASCII')):
