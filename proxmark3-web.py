@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
-import os, string, subprocess, sys, time
+import os, string, subprocess, sys, time, random
 #import subprocess
 
 from flask import Flask, flash, redirect, render_template, \
      request, url_for
-
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-debug=0
+debug=1
 
 proxmark3_rdv4_dir='../proxmark3'
 proxmark3_rdv4_client=proxmark3_rdv4_dir + '/client/proxmark3'
 logfile = "../card-reads.log"
+db_file="/home/pi/proxmark3.db"
+
 # Setup a dictionary for the serial port types
 serial_port_list = { '/dev/tty.usbmodemiceman1', '/dev/ttyACM0' }
 
@@ -33,6 +35,14 @@ def get_card_data(data):
             card_data['facility_code'] = str(cardsplit[16])
             #print('Raw: '+ raw_cardnumber +' Card Number: '+ card_number +' Card format: '+ format_len +' Facility: '+ facility_code )
             return(card_data)
+
+def log_card_data(card_data):
+    if debug: 
+        print("Writing date to the database...") 
+        print(card_data)
+    addCard = card_tbl(card_raw=card_data['raw_cardnumber'], card_number = card_data['card_number'], card_format = card_data['format_len'], card_oem = card_data['oem'], card_facility_code = card_data['facility_code'])
+    db.session.add(addCard)
+    db.session.commit()
 
 def exists(path):
     """Test whether a path exists.  Returns False for broken symbolic links"""
@@ -55,21 +65,35 @@ while not serial_port:
         time.sleep(delay)
 
 if(True):
-    app = Flask(__name__, instance_relative_config=True)
-
     # create and configure the app
-#    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True)
+    #Set up the Database for storing cards
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + db_file
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db = SQLAlchemy(app)
+
+    # Database Classes
+    class card_tbl(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        time_stamp = db.Column(db.DateTime, nullable=False,
+        default=datetime.utcnow)
+        card_raw = db.Column(db.String(128))
+        card_number = db.Column(db.String(128))
+        card_format = db.Column(db.String(128))
+        card_oem = db.Column(db.String(128))
+        card_facility_code = db.Column(db.String(128))
+
+        def __repr__(self):
+            return '<card_raw {}>'.format(self.card_raw)
+        #    return "<id(id='%s', time_stamp='%s', card_raw='%s', card_format='%s', card_oem='%s', card_facility_code='%s')>" % (
+        #            self.id, self.time_stamp, self.card_raw, self.card_number, self.card_format, self.card_oem, self.card_facility_code)
+
     app.config.from_mapping(
-        SECRET_KEY='djjslekrjgi348gj38fd225u8g',
-#        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        SECRET_KEY=str(random.getrandbits(64))
     )
 
-#    if test_config is None:
-#        # load the instance config, if it exists, when not testing
-#        app.config.from_pyfile('config.py', silent=True)
-#    else:
-        # load the test config if passed in
-#        app.config.from_mapping(test_config)
+    if not os.path.exists(db_file):
+        db.create_all()
 
     # ensure the instance folder exists
     try:
@@ -115,6 +139,7 @@ if(True):
         if(cardnumber.returncode == 0):
             if('HID Prox TAG ID:' in cardnumber.stdout.decode('ASCII')):
                 card = get_card_data(cardnumber.stdout.decode('ASCII'))
+                log_card_data(card)
                 if(debug): print("Card number:" + str(card))
                 current_time=str(datetime.now().isoformat(timespec='seconds'))
                 print(current_time + ' _Card Used_ ' + str(card), file=open(logfile, "a"))
@@ -150,6 +175,19 @@ if(True):
                 flash('ERROR: CARD DID NOT PROGRAM... TRY AGIAN.')
                 return redirect(url_for('index'))
 
+    @app.route('/card/list')
+    def card_list():
+        card = card_tbl.query.all()
+        #for line in card:
+        #    print(line['card_number'])
+
+        return render_template('cards.html', card = card)
+
+    @app.route('/card/<card_raw>')
+    def card_mod(card_raw):
+        card_raw = card_tbl.query.filter_by(card_raw=card_raw).all()
+        print(card)
+        return render_template('card.html', card_raw = card)
 
     @app.route('/wipe_card')
     def wipe_card():
