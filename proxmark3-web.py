@@ -74,20 +74,24 @@ if(True):
     #Set up the Database for storing cards
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + db_file
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['BABEL_DEFAULT_LOCALE'] = 'de'
     db = SQLAlchemy(app)
+    app.config['BABEL_DEFAULT_LOCALE'] = "de"
+    app.config['BABEL_DEFAULT_TIMEZONE'] = "UTC"
     babel = Babel(app)
-    #from app import views
 
-    @babel.localeselector
-    def get_locale():
+    #@babel.localeselector
+    #def get_locale():
         # Basic method, can be used as a fallback if a user's profile does not specify a language,
         # or a user hasn't yet registered.
-        result = request.accept_languages.best_match(LANGUAGES.keys())
+        #user = getattr(g, 'user', None)
+        #if user is not None:
+        #return user.locale
+
+        #return request.accept_languages.best_match(LANGUAGES.keys())
 
 	# will return language code (en/es/etc).
-        return 'es'
-        return result
+#        return 'es'
+#        return result
 
     # Database Classes
     class card_tbl(db.Model):
@@ -232,8 +236,6 @@ if(True):
 
     @app.route('/card/<card_id>')
     def card_mod(card_id):
-        #card_id = request.args.get('card_id')
-        #del_card_id = card_tbl.query.filter_by(card_id=card_id).all()
         delCard = card_tbl.query.filter_by(id=card_id).first()
         db.session.delete(delCard)
         db.session.commit()
