@@ -2,23 +2,34 @@
 <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 <title>Cards Captured</title>
 
-<body class="bg-dark">
-{% include "nav.html" %}
-<div class="container-fluid">
-   <div class="row border">
-      <div class="col-md-2 py-5">
-         <img class="img-fluid" src="/static/images/X-Force_Red_Logo_For_Dark_Backgrounds.png">
-      </div>
+{% include "header.html" %}
+
+   </div>
+     <div class="row">
+       <div class="col text-white">
+         <p>
+           {% with messages = get_flashed_messages() %}
+           {% if messages %}
+           Status:
+           {% for message in messages %}
+             {{ message }}
+           {% endfor %}
+           {% endif %}
+           {% endwith %}
+           &nbsp;
+         </p>
+       </div>
+     </div>
    </div>
 
-   <div class="row text-white border">
-      <div class="col border">
+   <div class="row text-white border no-gutters">
+      <div class="col-3 border">
 	      Action:
       </div>
-      <div class="col border">
+      <div class="col-3 border">
 	Facility Code:
       </div>
-      <div class="col border">
+      <div class="col-3 border">
         Card Number:
       </div>
       <div class="col border">
@@ -29,70 +40,37 @@
       </div>
    </div>
 {% for row in card %}
-   <div class="row text-white border p-1">
-	 <div class="col">
+   <div class="row text-white border p-1 ">
+	 <div class="col border border-danger">
 		 <form action="/write" method="get">
 			 <input type="hidden" name="raw_cardnumber" value={{ row['card_raw'] }} />
 			 <button type="submit" class="btn btn-primary">Clone</button>
 		 </form>
 		 <form action="/hid/sim" method="get">
 			 <input type="hidden" name="raw_cardnumber" value={{ row['card_raw'] }} />
-			 <button type="submit" class="btn btn-success">Simulate</button>
+			 <button type="submit" class="btn btn-success">Sim</button>
+		 </form>
+		 <form action="/card/{{ row['id'] }}" method="get">
+			 <!-- <input type="hidden" name="card_id" value={{ row['id'] }} /> -->
+			 <button type="submit" class="btn btn-outline-warning">Del</button>
 		 </form>
 	 </div>
-	 <div class="col">
+	 <div class="col border border-success">
 		 {{ row['card_facility_code'] }}
 	 </div>
-	 <div class="col">
+	 <div class="col border border-success">
 		 {{ row['card_number'] }}
 	 </div>
-	 <div class="col">
+	 <div class="col border border-success">
 		 {{ row['card_raw'] }}
 	 </div>
-	 <div class="col">
+	 <div class="col border border-success">
 		 {{ row['card_oem'] }}
 	 </div>
    </div>
 {% endfor %}
-</div>
-  <div class="row">
-    <div class="col text-white">
-      <p>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        Status:
-        {% for message in messages %}
-          {{ message }}
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-        &nbsp;
-      </p>
-    </div>
-  </div>
-</div>
 
-  <div class="row">
-    <div class="col">
-      <hr style="border-color: #fff;">
-    </div>
-  </div>
-
-  <div class="row">
-
-    <div class="col">
-      <a href="/provision_card" type="button" class="btn btn-danger btn-lg">CREATE X-Force Red Card</a>
-    </div>
-
-    <div class="col text-center">
-      <a href="/wipe_card" type="submit" class="btn btn-warning btn-lg" formaction="/wipe_card">Wipe Card</a>
-    </div>
-
-    <div class="col text-right">
-      <a href="/" type="submit" class="btn btn-secondary btn-lg" formaction="/">RESTART</a>
-    </div>
-  </div>
-</div>
-
+{% include "buttons.html" %}
 <!-- I am a code comment. I have a Key for you. 2005FFFFFF. -->
+{% include "bootstrap.html" %}
 </body>

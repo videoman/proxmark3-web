@@ -7,7 +7,7 @@ WorkingDirectory=/home/pi/proxmark3-web/
 #Type=simple
 Environment=FLASK_CONFIG=production
 Environment=FLASK_APP=/home/pi/proxmark3-web/proxmark3-web.py
-ExecStart=flask run
+ExecStart=/usr/bin/gunicorn3 --reload proxmark3-web:app -b:8080
 Restart=always
 
 [Install]

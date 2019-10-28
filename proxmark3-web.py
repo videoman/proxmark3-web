@@ -163,11 +163,18 @@ if(True):
             print('Got card raw: ' + str(raw_cardnumber))
 
         #Send hid simulate tag to proxmark3
-        write_hid = subprocess.run([proxmark3_rdv4_client, serial_port, '-c', 'lf hid sim ' + raw_cardnumber ], capture_output=True)
-        if('ERROR: serial port' in write_hid.stdout.decode('ASCII')):
-            flash('Serial port error')
-            return render_template('card_list')
+        #write_hid = subprocess.run([proxmark3_rdv4_client, serial_port, '-c', 'lf hid sim ' + raw_cardnumber, '&' ], capture_output=True)
+        write_hid = subprocess.Popen([proxmark3_rdv4_client, serial_port, '-c', 'lf hid sim ' + raw_cardnumber ])
 
+        flash('Simulate Mode has been entered, please press the button on the PM3 to exit...')
+        return redirect(url_for('index'))
+
+        #if('Simulating HID tag with ID' in write_hid.stdout.decode('ASCII')):
+        #    flash('Simulating HID Tag with the PM3... Push the hardware button to cancel...')
+        #    return redirect(url_for('index'))
+        #if('ERROR: serial port' in write_hid.stdout.decode('ASCII')):
+        #    flash('Serial port error')
+        #    return render_template('card_list')
 
     @app.route('/write')
     def write_hid():
@@ -175,6 +182,7 @@ if(True):
         if debug:
             print('Got card raw: ' + str(raw_cardnumber))
 
+        # Write the raw card number to the card. Next is to take FC and CN input too.
         write_hid = subprocess.run([proxmark3_rdv4_client, serial_port, '-c', 'lf t55xx wipe ; lf hid clone ' + raw_cardnumber + ' ; lf hid read' ], capture_output=True)
         if('ERROR: serial port' in write_hid.stdout.decode('ASCII')):
             flash('Serial port error')
@@ -197,11 +205,25 @@ if(True):
 
         return render_template('cards.html', card = card)
 
-    @app.route('/card/<card_raw>')
-    def card_mod(card_raw):
-        card_raw = card_tbl.query.filter_by(card_raw=card_raw).all()
-        print(card)
-        return render_template('card.html', card_raw = card)
+    @app.route('/shutdown')
+    def shutdown_os_now():
+        subprocess.run(['sudo', '/sbin/shutdown', '-P']) 
+        flash('System shutdown in progress....')
+        return redirect(url_for('index'))
+
+        return render_template('cards.html', card = card)
+
+    @app.route('/card/<card_id>')
+    def card_mod(card_id):
+        #card_id = request.args.get('card_id')
+        #del_card_id = card_tbl.query.filter_by(card_id=card_id).all()
+        delCard = card_tbl.query.filter_by(id=card_id).first()
+        db.session.delete(delCard)
+        db.session.commit()
+
+        if debug: print('Deleted card id: '+ str(card_id))
+        flash('Card '+card_id+' was deleted from the database...')
+        return redirect(url_for('card_list'))
 
     @app.route('/wipe_card')
     def wipe_card():
@@ -230,6 +252,8 @@ if(True):
             else:
                 flash('ERROR: CARD DID NOT PROGRAM... TRY AGIAN.')
                 return redirect(url_for('index'))
+
+
 
     @app.route('/')
     def index():
