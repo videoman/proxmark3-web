@@ -7,7 +7,10 @@ import os, string, subprocess, sys, time, random
 from flask import Flask, flash, redirect, render_template, \
      request, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_babel import Babel
+from flask_babel import gettext, ngettext
 from datetime import datetime
+from config import LANGUAGES
 
 debug=1
 
@@ -65,12 +68,26 @@ while not serial_port:
         time.sleep(delay)
 
 if(True):
+
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     #Set up the Database for storing cards
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + db_file
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['BABEL_DEFAULT_LOCALE'] = 'de'
     db = SQLAlchemy(app)
+    babel = Babel(app)
+    #from app import views
+
+    @babel.localeselector
+    def get_locale():
+        # Basic method, can be used as a fallback if a user's profile does not specify a language,
+        # or a user hasn't yet registered.
+        result = request.accept_languages.best_match(LANGUAGES.keys())
+
+	# will return language code (en/es/etc).
+        return 'es'
+        return result
 
     # Database Classes
     class card_tbl(db.Model):

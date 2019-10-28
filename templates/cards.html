@@ -24,19 +24,19 @@
 
    <div class="row text-white border no-gutters">
       <div class="col-3 border">
-	      Action:
+	      {{ gettext('Action:') }}
       </div>
       <div class="col-3 border">
-	Facility Code:
+	      {{ gettext('Facility Code:') }}
       </div>
       <div class="col-3 border">
-        Card Number:
+	      {{ gettext('Card Number:') }}
       </div>
       <div class="col border">
-        Raw HID Formated Card: 
+	      {{ gettext('Card Raw') }}
       </div>
       <div class="col border">
-        OEM Code:
+	      {{ gettext('OEM Code:') }}
       </div>
    </div>
 {% for row in card %}
@@ -44,15 +44,15 @@
 	 <div class="col border border-danger">
 		 <form action="/write" method="get">
 			 <input type="hidden" name="raw_cardnumber" value={{ row['card_raw'] }} />
-			 <button type="submit" class="btn btn-primary">Clone</button>
+			 <button type="submit" class="btn btn-primary">{{ gettext('Clone') }}</button>
 		 </form>
 		 <form action="/hid/sim" method="get">
 			 <input type="hidden" name="raw_cardnumber" value={{ row['card_raw'] }} />
-			 <button type="submit" class="btn btn-success">Sim</button>
+			 <button type="submit" class="btn btn-success">{{ gettext('Simulate') }}</button>
 		 </form>
 		 <form action="/card/{{ row['id'] }}" method="get">
 			 <!-- <input type="hidden" name="card_id" value={{ row['id'] }} /> -->
-			 <button type="submit" class="btn btn-outline-danger">Del</button>
+			 <button type="submit" class="btn btn-outline-danger">{{ gettext('Delete') }}</button>
 		 </form>
 	 </div>
 	 <div class="col border border-success">
