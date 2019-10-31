@@ -6,11 +6,11 @@ import os, string, subprocess, sys, time, random
 
 from flask import Flask, flash, redirect, render_template, \
      request, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_babel import Babel
 from flask_babel import gettext, ngettext
+from flask_babel import Babel
+from flask_babel import force_locale as babel_force_locale
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from config import LANGUAGES
 
 debug=1
 
@@ -71,27 +71,18 @@ if(True):
 
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    app.config.from_pyfile('/home/pi/proxmark3-web/mysettings.cfg')
+    babel = Babel(app)
+    babel.init_app(app)
     #Set up the Database for storing cards
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + db_file
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db = SQLAlchemy(app)
-    app.config['BABEL_DEFAULT_LOCALE'] = "de"
-    app.config['BABEL_DEFAULT_TIMEZONE'] = "UTC"
-    babel = Babel(app)
 
-    #@babel.localeselector
-    #def get_locale():
-        # Basic method, can be used as a fallback if a user's profile does not specify a language,
-        # or a user hasn't yet registered.
-        #user = getattr(g, 'user', None)
-        #if user is not None:
-        #return user.locale
+    @babel.localeselector
+    def get_locale():
+        return request.accept_languages.best_match(['ko','zh','ja', 'ja_JP', 'en'])
 
-        #return request.accept_languages.best_match(LANGUAGES.keys())
-
-	# will return language code (en/es/etc).
-#        return 'es'
-#        return result
 
     # Database Classes
     class card_tbl(db.Model):
@@ -106,8 +97,6 @@ if(True):
 
         def __repr__(self):
             return '<card_raw {}>'.format(self.card_raw)
-        #    return "<id(id='%s', time_stamp='%s', card_raw='%s', card_format='%s', card_oem='%s', card_facility_code='%s')>" % (
-        #            self.id, self.time_stamp, self.card_raw, self.card_number, self.card_format, self.card_oem, self.card_facility_code)
 
     app.config.from_mapping(
         SECRET_KEY=str(random.getrandbits(64))
@@ -174,7 +163,7 @@ if(True):
                         card_read=card_read 
                         )
             else:
-                flash('ERROR: Could not read a card... please try again....')
+                flash(gettext('ERROR: Could not read a card... please try again....'))
                 return redirect(url_for('index'))
 
     @app.route('/hid/sim')
@@ -187,7 +176,7 @@ if(True):
         #write_hid = subprocess.run([proxmark3_rdv4_client, serial_port, '-c', 'lf hid sim ' + raw_cardnumber, '&' ], capture_output=True)
         write_hid = subprocess.Popen([proxmark3_rdv4_client, serial_port, '-c', 'lf hid sim ' + raw_cardnumber ])
 
-        flash('Simulate Mode has been entered, please press the button on the PM3 to exit...')
+        flash(gettext('Simulate Mode has been entered, please press the button on the PM3 to exit...'))
         return redirect(url_for('index'))
 
         #if('Simulating HID tag with ID' in write_hid.stdout.decode('ASCII')):
@@ -215,7 +204,7 @@ if(True):
                 flash('Wrote ID to card.')
                 return redirect(url_for('index'))
             else:
-                flash('ERROR: CARD DID NOT PROGRAM... TRY AGIAN.')
+                flash(gettext('ERROR: CARD DID NOT PROGRAM... TRY AGIAN.'))
                 return redirect(url_for('index'))
 
     @app.route('/card/list')
@@ -229,7 +218,7 @@ if(True):
     @app.route('/shutdown')
     def shutdown_os_now():
         subprocess.run(['sudo', '/sbin/shutdown', '-P']) 
-        flash('System shutdown in progress....')
+        flash(gettext('System shutdown in progress....'))
         return redirect(url_for('index'))
 
         return render_template('cards.html', card = card)
@@ -241,7 +230,7 @@ if(True):
         db.session.commit()
 
         if debug: print('Deleted card id: '+ str(card_id))
-        flash('Card '+card_id+' was deleted from the database...')
+        flash(gettext('Card ') +card_id+ gettext(' was deleted from the database...'))
         return redirect(url_for('card_list'))
 
     @app.route('/wipe_card')
@@ -252,7 +241,7 @@ if(True):
             return redirect(url_for('index'))
 
         if(wipe_card.returncode == 0):
-            flash('t5577 card wipe complete')
+            flash(gettext('t5577 card wipe complete'))
             return redirect(url_for('index'))
 
     @app.route('/provision_card')
@@ -266,10 +255,10 @@ if(True):
 
         if(new_hid_id.returncode == 0):
             if('HID Prox TAG ID: 1029a0f4d2' in new_hid_id.stdout.decode('ASCII')):
-                flash('Wrote default ID to card.')
+                flash(gettext('Wrote default ID to card.'))
                 return redirect(url_for('index'))
             else:
-                flash('ERROR: CARD DID NOT PROGRAM... TRY AGIAN.')
+                flash(gettext('ERROR: CARD DID NOT PROGRAM... TRY AGIAN.'))
                 return redirect(url_for('index'))
 
 

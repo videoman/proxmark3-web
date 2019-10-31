@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-10-28 22:12+0000\n"
-"PO-Revision-Date: 2019-10-28 22:12+0000\n"
+"POT-Creation-Date: 2019-10-31 08:44+0000\n"
+"PO-Revision-Date: 2019-10-31 08:45+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
 "Language-Team: de <LL@li.org>\n"
@@ -18,35 +18,89 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
+#: app.py:166 proxmark3-web.py:166
+msgid "ERROR: Could not read a card... please try again...."
+msgstr ""
+
+#: app.py:179 proxmark3-web.py:179
+msgid ""
+"Simulate Mode has been entered, please press the button on the PM3 to "
+"exit..."
+msgstr ""
+
+#: app.py:207 app.py:261 proxmark3-web.py:207 proxmark3-web.py:261
+msgid "ERROR: CARD DID NOT PROGRAM... TRY AGIAN."
+msgstr ""
+
+#: app.py:221 proxmark3-web.py:221
+msgid "System shutdown in progress...."
+msgstr ""
+
+#: app.py:233 proxmark3-web.py:233
+msgid "Card "
+msgstr ""
+
+#: app.py:233 proxmark3-web.py:233
+msgid " was deleted from the database..."
+msgstr ""
+
+#: app.py:244 proxmark3-web.py:244
+msgid "t5577 card wipe complete"
+msgstr ""
+
+#: app.py:258 proxmark3-web.py:258
+msgid "Wrote default ID to card."
+msgstr ""
+
+#: templates/buttons.html:11
+msgid "CREATE X-Force Red Card"
+msgstr ""
+
+#: templates/buttons.html:17
+msgid "Wipe Card"
+msgstr ""
+
+#: templates/buttons.html:23
+msgid "RESET"
+msgstr ""
+
+#: templates/buttons.html:29
+msgid "Shutdown Pi"
+msgstr ""
+
 #: templates/cards.html:27
-msgid "Vorgang:"
+msgid "Action:"
 msgstr ""
 
 #: templates/cards.html:30
-msgid "Einrichtungscode:"
+msgid "Facility Code:"
 msgstr ""
 
 #: templates/cards.html:33
-msgid "Kartennummer:"
+msgid "Card Number:"
 msgstr ""
 
 #: templates/cards.html:36
-msgid "Rohdaten:"
+msgid "Card Raw"
 msgstr ""
 
 #: templates/cards.html:39
-msgid "OEM-Code:"
+msgid "OEM Code:"
 msgstr ""
 
 #: templates/cards.html:47
-msgid "Klonnummer"
+msgid "Clone"
 msgstr ""
 
 #: templates/cards.html:51
-msgid "Wiederholung"
+msgid "Simulate"
 msgstr ""
 
 #: templates/cards.html:55
-msgid "löschen"
+msgid "Delete"
+msgstr ""
+
+#: templates/main.html:9
+msgid "Read HID Card"
 msgstr ""
 

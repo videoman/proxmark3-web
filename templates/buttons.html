@@ -8,25 +8,25 @@
 
     <div class="col">
 	    <a href="/provision_card">
-		    <button type="button" class="btn btn-primary">CREATE X-Force Red Card</button>
+		    <button type="button" class="btn btn-primary">{{ gettext('CREATE X-Force Red Card') }}</button>
 	    </a>
     </div>
 
     <div class="col text-center">
 	    <a href="/wipe_card"> 
-		    <button type="submit" class="btn btn-danger" formaction="/wipe_card">Wipe Card</button>
+		    <button type="submit" class="btn btn-danger" formaction="/wipe_card">{{ gettext('Wipe Card') }}</button>
 	    </a>
     </div>
 
     <div class="col text-right">
 	    <a href="/" >
-		    <button type="submit" class="btn btn-warning" formaction="/">RESET</button>
+		    <button type="submit" class="btn btn-warning" formaction="/">{{ gettext('RESET') }}</button>
 	    </a>
     </div>
 
     <div class="col text-center">
 	    <a href="/shutdown">
-		    <button type="submit" class="btn btn-danger" formaction="/shutdown">Shutdown Pi</button>
+		    <button type="submit" class="btn btn-danger" formaction="/shutdown">{{ gettext('Shutdown Pi') }}</button>
 	    </a>
     </div>
 

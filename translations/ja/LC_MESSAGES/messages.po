@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-10-28 22:12+0000\n"
-"PO-Revision-Date: 2019-10-28 22:13+0000\n"
+"POT-Creation-Date: 2019-10-31 10:35+0000\n"
+"PO-Revision-Date: 2019-10-31 10:38+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
 "Language-Team: ja <LL@li.org>\n"
@@ -17,6 +17,60 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
+
+#: app.py:166 proxmark3-web.py:166
+msgid "ERROR: Could not read a card... please try again...."
+msgstr ""
+
+#: app.py:179 proxmark3-web.py:179
+msgid ""
+"Simulate Mode has been entered, please press the button on the PM3 to "
+"exit..."
+msgstr ""
+
+#: app.py:207 app.py:261 proxmark3-web.py:207 proxmark3-web.py:261
+msgid "ERROR: CARD DID NOT PROGRAM... TRY AGIAN."
+msgstr ""
+
+#: app.py:221 proxmark3-web.py:221
+msgid "System shutdown in progress...."
+msgstr ""
+
+#: app.py:233 proxmark3-web.py:233
+msgid "Card "
+msgstr ""
+
+#: app.py:233 proxmark3-web.py:233
+msgid " was deleted from the database..."
+msgstr ""
+
+#: app.py:244 proxmark3-web.py:244
+msgid "t5577 card wipe complete"
+msgstr ""
+
+#: app.py:258 proxmark3-web.py:258
+msgid "Wrote default ID to card."
+msgstr ""
+
+#: templates/buttons.html:11
+msgid "CREATE X-Force Red Card"
+msgstr ""
+
+#: templates/buttons.html:17
+msgid "Wipe Card"
+msgstr ""
+
+#: templates/buttons.html:23
+msgid "RESET"
+msgstr ""
+
+#: templates/buttons.html:29
+msgid "Shutdown Pi"
+msgstr ""
+
+#: templates/cards.html:13 templates/main.html:49
+msgid "Status"
+msgstr ""
 
 #: templates/cards.html:27
 msgid "Action:"
@@ -48,5 +102,45 @@ msgstr ""
 
 #: templates/cards.html:55
 msgid "Delete"
+msgstr ""
+
+#: templates/main.html:9
+msgid "Read HID Card"
+msgstr ""
+
+#: templates/main.html:17
+msgid "OEM Code"
+msgstr ""
+
+#: templates/main.html:18
+msgid "Facility Code"
+msgstr ""
+
+#: templates/main.html:19
+msgid "Card Number"
+msgstr ""
+
+#: templates/main.html:20
+msgid "Raw HID Formated Card"
+msgstr ""
+
+#: templates/main.html:32
+msgid "Card ID"
+msgstr ""
+
+#: templates/main.html:36
+msgid "Clone Card"
+msgstr ""
+
+#: templates/nav.html:2
+msgid "Proxmark3-web"
+msgstr ""
+
+#: templates/nav.html:10
+msgid "Read Card"
+msgstr ""
+
+#: templates/nav.html:13
+msgid "Captured Cards"
 msgstr ""
 

@@ -6,7 +6,7 @@
 
 	<div class="row">
     <div class="col-sm-6 offset-sm-3 py-2">
-      <a href="/read/hid" class="btn btn-danger btn-lg btn-block" role="button">Read HID Card</a>
+	    <a href="/read/hid" class="btn btn-danger btn-lg btn-block" role="button">{{ gettext('Read HID Card') }}</a>
     </div>
   </div>
 
@@ -14,10 +14,10 @@
    	<div class="col text-white">
       <h1 class="h4">Card Info</h1>
       <p>
-        OEM Code: {{ oem }}<br>
-        Facility Code: {{ facility_code }}<br>
-        Card Number: {{ card_number }}<br>
-        Raw HID Formated Card: {{ raw_cardnumber }}
+      {{ gettext('OEM Code') }}: {{ oem }}<br>
+      {{ gettext('Facility Code') }}: {{ facility_code }}<br>
+      {{ gettext('Card Number') }}: {{ card_number }}<br>
+      {{ gettext('Raw HID Formated Card') }}: {{ raw_cardnumber }}
       </p>
     </div>
   </div>
@@ -29,11 +29,11 @@
           <label class="sr-only" for="exampleInputAmount">Card to clone</label>
           <div class="input-group">
             <div class="input-group-prepend">
-              <span class="input-group-text">Card ID: </span>
+		    <span class="input-group-text">{{ gettext('Card ID') }}: </span>
             </div>
             <input type="text" class="form-control" name="raw_cardnumber" value={{raw_cardnumber if raw_cardnumber else '2006540A73'}} placeholder={{raw_cardnumber if raw_cardnumber else '2006540A73'}}>
             <div class="input-group-append">
-              <button type="submit" class="btn btn-danger" id="button-addon2">Clone Card!</button>
+		    <button type="submit" class="btn btn-danger" id="button-addon2">{{ gettext('Clone Card') }}!</button>
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
       <p>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        Status:
+	{{ gettext('Status') }}:
         {% for message in messages %}
           {{ message }}
         {% endfor %}
