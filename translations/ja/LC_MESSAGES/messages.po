@@ -20,127 +20,127 @@ msgstr ""
 
 #: app.py:166 proxmark3-web.py:166
 msgid "ERROR: Could not read a card... please try again...."
-msgstr ""
+msgstr "エラー：カードを読み取れませんでした... 再試行してください...."
 
 #: app.py:179 proxmark3-web.py:179
 msgid ""
 "Simulate Mode has been entered, please press the button on the PM3 to "
 "exit..."
-msgstr ""
+msgstr "似せるモードが開始されました"
 
 #: app.py:207 app.py:261 proxmark3-web.py:207 proxmark3-web.py:261
 msgid "ERROR: CARD DID NOT PROGRAM... TRY AGIAN."
-msgstr ""
+msgstr "エラー：データがカードに書き込まれませんでした... 再試行してください"
 
 #: app.py:221 proxmark3-web.py:221
 msgid "System shutdown in progress...."
-msgstr ""
+msgstr "システムのシャットダウンが進行中...."
 
 #: app.py:233 proxmark3-web.py:233
 msgid "Card "
-msgstr ""
+msgstr "カード "
 
 #: app.py:233 proxmark3-web.py:233
 msgid " was deleted from the database..."
-msgstr ""
+msgstr " がデータベースから削除されました...."
 
 #: app.py:244 proxmark3-web.py:244
 msgid "t5577 card wipe complete"
-msgstr ""
+msgstr "t557カードの消去が完了しました"
 
 #: app.py:258 proxmark3-web.py:258
 msgid "Wrote default ID to card."
-msgstr ""
+msgstr "デフォルトIDをカードに書き込みました"
 
 #: templates/buttons.html:11
 msgid "CREATE X-Force Red Card"
-msgstr ""
+msgstr "X-Force Redカードを作る"
 
 #: templates/buttons.html:17
 msgid "Wipe Card"
-msgstr ""
+msgstr "カードのデータを消す"
 
 #: templates/buttons.html:23
 msgid "RESET"
-msgstr ""
+msgstr "リセット"
 
 #: templates/buttons.html:29
 msgid "Shutdown Pi"
-msgstr ""
+msgstr "Piを停止する"
 
 #: templates/cards.html:13 templates/main.html:49
 msgid "Status"
-msgstr ""
+msgstr "状態"
 
 #: templates/cards.html:27
 msgid "Action:"
-msgstr ""
+msgstr "活動"
 
 #: templates/cards.html:30
 msgid "Facility Code:"
-msgstr ""
+msgstr "施設コード"
 
 #: templates/cards.html:33
 msgid "Card Number:"
-msgstr ""
+msgstr "カード番号"
 
 #: templates/cards.html:36
 msgid "Card Raw"
-msgstr ""
+msgstr "カードの生データ"
 
 #: templates/cards.html:39
 msgid "OEM Code:"
-msgstr ""
+msgstr "OEMコード"
 
 #: templates/cards.html:47
 msgid "Clone"
-msgstr ""
+msgstr "クローン"
 
 #: templates/cards.html:51
 msgid "Simulate"
-msgstr ""
+msgstr "似せる"
 
 #: templates/cards.html:55
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #: templates/main.html:9
 msgid "Read HID Card"
-msgstr ""
+msgstr "HIDカードを読み取る"
 
 #: templates/main.html:17
 msgid "OEM Code"
-msgstr ""
+msgstr "OEMコード"
 
 #: templates/main.html:18
 msgid "Facility Code"
-msgstr ""
+msgstr "施設コード"
 
 #: templates/main.html:19
 msgid "Card Number"
-msgstr ""
+msgstr "OEMコード"
 
 #: templates/main.html:20
 msgid "Raw HID Formated Card"
-msgstr ""
+msgstr "生HIDデータでフォーマット済みのカード"
 
 #: templates/main.html:32
 msgid "Card ID"
-msgstr ""
+msgstr "カードID"
 
 #: templates/main.html:36
 msgid "Clone Card"
-msgstr ""
+msgstr "カードをクローンする"
 
 #: templates/nav.html:2
 msgid "Proxmark3-web"
-msgstr ""
+msgstr "Proxmark3-web"
 
 #: templates/nav.html:10
 msgid "Read Card"
-msgstr ""
+msgstr "カードを読み取る"
 
 #: templates/nav.html:13
 msgid "Captured Cards"
-msgstr ""
+msgstr "取り込みカード"
 

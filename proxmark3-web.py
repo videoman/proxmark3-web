@@ -14,6 +14,7 @@ from datetime import datetime
 
 debug=1
 
+run_directory="/home/pi/proxmark3-web/"
 proxmark3_rdv4_dir='../proxmark3'
 proxmark3_rdv4_client=proxmark3_rdv4_dir + '/client/proxmark3'
 logfile = "../card-reads.log"
@@ -66,6 +67,10 @@ while not serial_port:
         delay=10
         print("Serial device not found.... sleeping "+ str(delay) +" seconds - connect your Proxmark3-rdv4...")
         time.sleep(delay)
+
+if not exists(run_directory + "messages.pot"):
+    subprocess.run(['pybabel', 'extract', '-F', run_directory + 'babel.cfg', '-o', 'messages.pot', '.'])
+    subprocess.run(['pybabel', 'compile', '-d', run_directory + 'translations'])
 
 if(True):
 
