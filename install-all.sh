@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# this script will install proxmark3-rdv4, and all the things.
+# this script will install proxmark3-rdv4 on a raspiberry pi, and all the things.
 
 sudo apt-get update && sudo apt-get -y install --no-install-recommends git ca-certificates build-essential pkg-config \
 libreadline-dev gcc-arm-none-eabi libnewlib-dev python3-flask python3-flask-sqlalchemy hostapd dnsmasq python3-pip python3-dateutil python3-dateparser libev-dev gunicorn3 && \

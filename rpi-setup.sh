@@ -1,18 +1,24 @@
 #!/bin/bash
 sudo systemctl stop dnsmasq && \
 sudo systemctl stop hostapd && \
-cat <<EOF >/tmp/dhcpcd.conf
+sudo cp /etc/dhcpcd.conf /tmp/dhcpcd.conf
+cat <<EOF >>/tmp/dhcpcd.conf
 interface wlan0
     static ip_address=192.168.4.1/24
     nohook wpa_supplicant
 EOF
-sudo mv /tmp/dhcpcd.conf /etc/dhcpcd.conf
+sudo cp /tmp/dhcpcd.conf /etc/dhcpcd.conf
 sudo service dhcpcd restart
 
 sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
 cat <<EOF >/tmp/dnsmasq.conf
 interface=wlan0      # Use the require wireless interface - usually wlan0
 dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h
+
+interface=br0
+expand-hosts
+domain=proxmark3-web.com
+dhcp-range=192.168.20.100,192.168.20.150,12h
 EOF
 sudo mv /tmp/dnsmasq.conf /etc/dnsmasq.conf
 sudo systemctl reload dnsmasq
