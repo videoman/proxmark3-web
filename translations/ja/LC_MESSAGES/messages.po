@@ -26,7 +26,7 @@ msgstr "エラー：カードを読み取れませんでした... 再試行し�
 msgid ""
 "Simulate Mode has been entered, please press the button on the PM3 to "
 "exit..."
-msgstr "似せるモードが開始されました"
+msgstr "シミュレーションモードが開始されました"
 
 #: app.py:207 app.py:261 proxmark3-web.py:207 proxmark3-web.py:261
 msgid "ERROR: CARD DID NOT PROGRAM... TRY AGIAN."
@@ -98,7 +98,7 @@ msgstr "クローン"
 
 #: templates/cards.html:51
 msgid "Simulate"
-msgstr "似せる"
+msgstr "シミュレーションをする"
 
 #: templates/cards.html:55
 msgid "Delete"
@@ -122,7 +122,7 @@ msgstr "OEMコード"
 
 #: templates/main.html:20
 msgid "Raw HID Formated Card"
-msgstr "生HIDデータでフォーマット済みのカード"
+msgstr "ローHIDデータでフォーマット済みのカード"
 
 #: templates/main.html:32
 msgid "Card ID"
@@ -142,5 +142,5 @@ msgstr "カードを読み取る"
 
 #: templates/nav.html:13
 msgid "Captured Cards"
-msgstr "取り込みカード"
+msgstr "キャップチャーしたカード"
 
