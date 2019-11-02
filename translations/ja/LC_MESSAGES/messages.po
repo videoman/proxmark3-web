@@ -118,7 +118,7 @@ msgstr "施設コード"
 
 #: templates/main.html:19
 msgid "Card Number"
-msgstr "OEMコード"
+msgstr "カード番号"
 
 #: templates/main.html:20
 msgid "Raw HID Formated Card"
