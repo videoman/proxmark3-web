@@ -10,6 +10,8 @@ from flask_babel import gettext, ngettext
 from flask_babel import Babel
 from flask_babel import force_locale as babel_force_locale
 from flask_sqlalchemy import SQLAlchemy
+#from flask_sqlalchemy import desc, asc
+from sqlalchemy import asc, desc
 from datetime import datetime
 
 debug=1
@@ -214,7 +216,8 @@ if(True):
 
     @app.route('/card/list')
     def card_list():
-        card = card_tbl.query.all()
+        #card = card_tbl.query.all()
+        card = card_tbl.query.order_by(desc(card_tbl.id)).all()
         #for line in card:
         #    print(line['card_number'])
 
