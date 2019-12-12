@@ -63,7 +63,7 @@ Next test that you can access the proxmark3, and that you have access to the har
 ```shell
 proxmark3 /dev/ttyACM0
 ```
-Run a few  tests to see if you can access the proxmark4-rdv4 eg: `lf search` or `hf search`
+Run a few  tests to see if you can access the proxmark3-rdv4 eg: `lf search` or `hf search`
 
 #### Install proxmark-web
 ```shell
