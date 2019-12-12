@@ -1,10 +1,10 @@
-# proxmark3-web
+# proxmark3-web 
+Supports the proxmark3 RDV4 hardware, and software. (could easily be hacked for other hardware/command versions)
 Python Flask Web Interface for proxmark3 RDV4 hardware.
 
-
 # Installation Instructions
-These instructions assume you have Raspbian on your Pi already setup, and ready to go. [Raspbian Install] (https://www.raspberrypi.org/documentation/installation/installing-images/)
-Once you have the card writen, you should enable SSH, per the instructons on [here] (https://linuxize.com/post/how-to-enable-ssh-on-raspberry-pi/)
+These instructions assume you have Raspbian on your Pi already setup, and ready to go. [Raspbian Install](https://www.raspberrypi.org/documentation/installation/installing-images/)
+Once you have the card writen, you should enable SSH, per the instructons [here](https://linuxize.com/post/how-to-enable-ssh-on-raspberry-pi/)
 
 SSH into your pi, and follow along with this...
 
@@ -74,14 +74,4 @@ This will setup systemd to start the Flask Web interface on boot for you.
 
 ####
 
-# proxmark-rdv-web
-Python Flask Web Front End for Proxmark3 RDV unit.
 
-To install the modules for this program, you shuld be able to do:
-pip3 install flask
-
-
-Then run the web app:
-export FLASK_APP=proxmark-web.py
-export FLASK_ENV=development
-flask run
