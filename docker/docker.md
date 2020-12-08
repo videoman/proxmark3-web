@@ -15,10 +15,10 @@ This will create a new Docker container with the latest Proxmark3 code as well a
 ## Running
 
 ```sh
-docker run -it --rm --name proxmark \
+$ docker run -it --rm --name proxmark \
     -p 8080:8080 \
     --device=/dev/ttyACM0 \
-    proxmark
+    proxmark3-web
 ```
 
 Be sure to pass the Proxmark device to the container, it should be `/dev/ttyACM0` on most Linux systems.
