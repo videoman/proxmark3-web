@@ -8,6 +8,8 @@ Once you have the card writen, you should enable SSH, per the instructons [here]
 
 SSH into your pi, and follow along with this...
 
+## [Docker Install](docker/docker.md)
+
 ## Quick Install
 
 ```shell
