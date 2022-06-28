@@ -14,7 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import asc, desc
 from datetime import datetime
 
-debug=1
+debug=False
 
 run_directory="/home/pi/proxmark3-web/"
 proxmark3_rdv4_dir='../proxmark3'
@@ -23,10 +23,11 @@ logfile = "../card-reads.log"
 db_file="/home/pi/proxmark3.db"
 
 # Setup a dictionary for the serial port types
-serial_port_list = { '/dev/tty.usbmodemiceman1', '/dev/ttyACM0' }
+#serial_port_list = { '/dev/tty.usbmodemiceman1', '/dev/ttyACM0' }
+serial_port_list = { '/dev/ttyACM0' }
 
 def get_card_data(data):
-    #print(data)
+    if debug: print(data)
     for line in data.split("\n"):
         if("TAG ID:" in line):
             print(str(line.strip()))
@@ -45,13 +46,13 @@ def get_card_data(data):
 def log_card_data(card_data):
     if debug: 
         print("Writing date to the database...") 
-        print(card_data)
+        if debug: print(card_data)
     addCard = card_tbl(card_raw=card_data['raw_cardnumber'], card_number = card_data['card_number'], card_format = card_data['format_len'], card_oem = card_data['oem'], card_facility_code = card_data['facility_code'])
     db.session.add(addCard)
     db.session.commit()
 
 def exists(path):
-    """Test whether a path exists.  Returns False for broken symbolic links"""
+    """Test if a path exists.  Returns False for broken symbolic links"""
     try:
         os.stat(path)
     except OSError:
@@ -64,7 +65,7 @@ while not serial_port:
     for device in set(serial_port_list):
         if(exists(device)):
             serial_port=device
-            print("Setting serial port to: " + serial_port)
+            if debug: print("Setting serial port to: " + serial_port)
     if not serial_port:
         delay=10
         print("Serial device not found.... sleeping "+ str(delay) +" seconds - connect your Proxmark3-rdv4...")
@@ -79,6 +80,7 @@ if(True):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_pyfile('/home/pi/proxmark3-web/mysettings.cfg')
+    app.config['DEBUG'] = False
     babel = Babel(app)
     babel.init_app(app)
     #Set up the Database for storing cards
@@ -89,7 +91,6 @@ if(True):
     @babel.localeselector
     def get_locale():
         return request.accept_languages.best_match(['ko','zh','ja', 'ja_JP', 'en'])
-
 
     # Database Classes
     class card_tbl(db.Model):
@@ -148,12 +149,15 @@ if(True):
 
     @app.route('/read/hid')
     def read_hid_card():
-        cardnumber = subprocess.run([proxmark3_rdv4_client, serial_port, '-c', 'lf hid read'], capture_output=True)
+        if debug: print("HID Mode: reading the card...")
+        cardnumber = subprocess.run([proxmark3_rdv4_client, serial_port, '-c', 'lf hid read'], timeout=3, capture_output=True)
         if('ERROR: serial port' in cardnumber.stdout.decode('ASCII')):
+            if debug: print("no data from reader")
             flash('Serial port error')
             return redirect(url_for('index'))
 
         if(cardnumber.returncode == 0):
+            if debug: print("Got data.. decodeing...")
             if('HID Prox TAG ID:' in cardnumber.stdout.decode('ASCII')):
                 card = get_card_data(cardnumber.stdout.decode('ASCII'))
                 log_card_data(card)
@@ -217,6 +221,7 @@ if(True):
     @app.route('/card/list')
     def card_list():
         #card = card_tbl.query.all()
+        if debug: print("getting a list of cards....")
         card = card_tbl.query.order_by(desc(card_tbl.id)).all()
         #for line in card:
         #    print(line['card_number'])
@@ -237,12 +242,14 @@ if(True):
         db.session.delete(delCard)
         db.session.commit()
 
-        if debug: print('Deleted card id: '+ str(card_id))
+        if debug: 
+            print('Deleted card id: '+ str(card_id))
         flash(gettext('Card ') +card_id+ gettext(' was deleted from the database...'))
         return redirect(url_for('card_list'))
 
     @app.route('/wipe_card')
     def wipe_card():
+        if debug: print("Wiping card....")
         wipe_card = subprocess.run([proxmark3_rdv4_client, serial_port, '-c', 'lf t55xx wipe' ], capture_output=True)
         if('ERROR: serial port' in wipe_card.stdout.decode('ASCII')):
             flash('Serial port error')
