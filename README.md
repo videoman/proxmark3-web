@@ -1,6 +1,6 @@
 # proxmark3-web 
 Supports the proxmark3 RDV4 hardware, and software. (could easily be hacked for other hardware/command versions)
-Python Flask Web Interface for proxmark3 RDV4 hardware.
+Python Flask Web Interface for proxmark3 RDV4 hardware. See it in action: [ToorCon 21 - CARD CLONING DOESN'T HAVE TO BE HARD](https://youtu.be/hhIMpNbMCEA?t=1132)
 
 # Installation Instructions
 These instructions assume you have Raspbian on your Pi already setup, and ready to go. [Raspbian Install](https://www.raspberrypi.org/documentation/installation/installing-images/)
